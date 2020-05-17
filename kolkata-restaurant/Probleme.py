@@ -127,12 +127,15 @@ def astar(p,actualPos,verbose=False,stepwise=False):
         """
         
     startTime = time.time()
-
-    nodeInit = Noeud(p.init,0,None)
+    #Le noeud initial (la position de depart du joueur)
+    nodeInit = Noeud(p.init,3,None)
+    #La frontiere de la position du joueur actuel
     frontiere = [(nodeInit.g+p.h_value(nodeInit.etat,p.but),nodeInit)] 
-    print("front:", frontiere.valeur)
+    print("front:", frontiere[0][0])
 
+    #Initialisation de la reserve    
     reserve = {}        
+    
     bestNoeud = nodeInit
     
     while frontiere != [] and not p.estBut(bestNoeud.etat):              
@@ -143,8 +146,11 @@ def astar(p,actualPos,verbose=False,stepwise=False):
         
         if p.immatriculation(bestNoeud.etat) not in reserve:            
             reserve[p.immatriculation(bestNoeud.etat)] = bestNoeud.g #maj de reserve
+            #print("reserve : ", reserve)
+            #On étend les noeuds
             nouveauxNoeuds = bestNoeud.expand(p,actualPos)
             for n in nouveauxNoeuds:
+                print("Etat: ", n.etat)
                 f = n.g+p.h_value(n.etat,p.but)
                 heapq.heappush(frontiere, (f,n))
 
@@ -158,7 +164,7 @@ def astar(p,actualPos,verbose=False,stepwise=False):
             print ("Reserve:", reserve)
             if stop_stepwise=="s":
                 stepwise=False
-    print("aStar finis", heapq)
+    print("aStar finis", bestNoeud.trace(p))
     bestNoeud.trace(p)          
             
     # Mode verbose            

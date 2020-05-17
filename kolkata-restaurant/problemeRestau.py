@@ -9,7 +9,8 @@ from Probleme import Probleme
 def distManhattan(p1,p2):
     """ calcule la distance de Manhattan entre le tuple 
         p1 et le tuple p2
-        """
+    """
+    print("mana: ",p1[0]," mana2: ",p2,"  ")
     return abs(p1[0][0]-p2[0][0])+abs(p1[1][1]-p2[1][1]) 	
 
 def randomPuzzle(n):
@@ -58,13 +59,13 @@ class ProblemeRestaurant(Probleme):
         return self.but==e
     
     def calculManhattan(self,t1,t2):
-	""" calcule la somme des distances de Manhattan entre 
-	    deux taquins t1 et t2
-	    """
-	#print("t1 :",t1)
-	sommeMan = 0
-	sommeMan += distManhattan(t1,t2)
-	return sommeMan 
+    	""" calcule la somme des distances de Manhattan entre 
+    	    deux grille t1 et t2
+    	    """
+    	#print("t1 :",t1)
+    	sommeMan = 0
+    	sommeMan = sommeMan + distManhattan(t1,t2)
+    	return sommeMan 
 
     #def calculManhattan(self,t1,t2):
     #    """ calcule la somme des distances de Manhattan entre 
@@ -82,7 +83,8 @@ class ProblemeRestaurant(Probleme):
         
     def calculPieces(self,e1,e2):
         """ au moins sommePieces doient etre deplaces pour arriver au but
-            """
+        """
+        
         (s,_) = e1.shape
         sommePieces=0
         for i in range(s): 
@@ -108,14 +110,14 @@ class ProblemeRestaurant(Probleme):
         
     def successeurs(self,etat,actualPos):
         """ retourne une liste avec les taquins successeurs possibles
-            """
+        """
         directions = ('g','d','h','b')
         listeSuc =[]
         
         swapApToAR = list(actualPos)
 
        
-        print("new pos: ", actualPos)   
+        print("newer pos: ", actualPos)   
         xposi = swapApToAR[0] + 1 #On affecte les differentes valeurs possibles de successeurs a des variables
         xneg = swapApToAR[0] - 1
         yposi = swapApToAR[1] + 1
@@ -123,27 +125,35 @@ class ProblemeRestaurant(Probleme):
         #On teste si les differentes valeurs possibles sont dans les valeurs permisent (pas les murs)
         for dir in directions:
             #print("etat: ", etat)
-            if directions=='g':
+            if dir=='g':
+                print("enter g")
                 swapApToAR[0] = xneg
                 potentSuc = tuple(swapApToAR)
                 if(actualPos in etat):
+                    print("enter enter g")
                     listeSuc.append(potentSuc)
-            elif directions=='d':
+            elif dir=='d':
+                print("enter d")
                 swapApToAR[0] = xposi
                 potentSuc = tuple(swapApToAR)
                 if(actualPos in etat):
+                    print("enter enter d")
                     listeSuc.append(potentSuc)
-            elif directions=='h':
+            elif dir=='h':
+                print("enter h")
                 swapApToAR[0] = yposi
                 potentSuc = tuple(swapApToAR)
                 if(actualPos in etat):
+                    print("enter enter h")
                     listeSuc.append(potentSuc)
-            elif directions=='b':
+            elif dir=='b':
+                print("enter b")
                 swapApToAR[0] = yneg
                 potentSuc = tuple(swapApToAR)
                 if(actualPos in etat):
+                    print("enter enter b")
                     listeSuc.append(potentSuc)
-            
+            print("suceeees: ",listeSuc)
             return listeSuc
         
     def immatriculation(self,etat):
